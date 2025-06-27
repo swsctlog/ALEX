@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О Проекте - Аналитическая Панель</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --bs-body-font-family: 'Inter', sans-serif;
+            --bs-body-bg: #f0f2f5;
+            --bs-body-color: #1c1e21;
+            --card-bg: #ffffff;
+            --border-color: #dee2e6;
+            --accent-green: #198754;
+            --accent-red: #dc3545;
+            --accent-blue: #0d6efd;
+            --accent-yellow: #ffc107;
+        }
+
+        [data-bs-theme="dark"] {
+             --bs-body-bg: #131722;
+            --bs-body-color: #d1d4dc;
+            --card-bg: #1e222d;
+            --border-color: #2a2e39;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .navbar {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .content-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .content-section ul {
+            padding-left: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">
+            <i data-lucide="activity" class="text-primary"></i>
+            Trading Platform
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Главная</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="trader.html">Trading LAB</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="about.html">О проекте</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contacts.html">Контакты</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="card">
+            <div class="card-body p-4 p-md-5 content-section">
+
+                <h1 class="card-title display-6 fw-bold border-bottom pb-3 mb-4">Архитектура и Принцип Работы Аналитической Платформы</h1>
+
+                <p class="lead">Наша аналитическая панель — это не просто агрегатор данных, а сложный программный комплекс, разработанный для предоставления трейдерам и инвесторам своевременных, точных и, что самое главное, <strong>надежных</strong> торговых сигналов. В основе системы лежат три ключевых принципа: <strong>глубокий анализ</strong>, <strong>отказоустойчивость</strong> и <strong>интуитивно понятный интерфейс</strong>.</p>
+                
+                <h3><i data-lucide="cpu"></i>1. Интеллектуальный Алгоритм Принятия Решений</h3>
+                <p>В отличие от простых систем, которые реагируют на единичные индикаторы, наш алгоритм использует комплексный, взвешенный подход для формирования прогнозов.</p>
+                
+                <h5 class="fw-semibold mt-4">Как это работает:</h5>
+                <ul>
+                    <li>
+                        <strong>Многофакторная Оценка (Scoring System):</strong> Система не принимает решение на основе одного "сигнала". Вместо этого она непрерывно анализирует несколько ключевых потоков данных:
+                        <ul>
+                            <li><strong>Технические индикаторы:</strong> RSI, EMA, MACD и другие показатели анализируются на предмет сигналов перекупленности, перепроданности и пересечения трендовых линий.</li>
+                            <li><strong>Анализ тренда и волатильности:</strong> Алгоритм оценивает силу текущего тренда и волатильность рынка, чтобы понять, является ли движение устойчивым или хаотичным.</li>
+                            <li><strong>AI-анализ новостей:</strong> Каждая новость, связанная с активом, отправляется на анализ нейронной сети (Google Gemini), которая определяет ее тональность (позитивная, негативная, нейтральная) и присваивает соответствующий вес.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Сглаживание и Устойчивость:</strong> Мы понимаем, что рынок "шумный", и моментальные сигналы часто бывают ложными. Чтобы решить эту проблему, наш алгоритм <strong>не реагирует на мгновенные скачки</strong>. Вместо этого он накапливает историю оценок за последние несколько минут (в зависимости от выбранного таймфрейма) и принимает решение на основе <strong>средневзвешенного балла</strong>. Это позволяет отсекать рыночный шум и предотвращает ситуацию, когда сигнал `BUY` сменяется на `HOLD` через две минуты.
+                    </li>
+                </ul>
+
+                <h3><i data-lucide="shield-check"></i>2. Тройная Система Отказоустойчивости: Наша Гарантия Стабильности</h3>
+                <p>Мы осознаем, что зависимость от одного источника данных — это риск. Поэтому мы построили систему по принципу тройного резервирования, что делает ее исключительно надежной.</p>
+                <ul>
+                    <li>
+                        <strong>Резервирование Источников Котировок:</strong>
+                        <ul>
+                            <li><strong>Основной API:</strong> По умолчанию система запрашивает данные у <strong>Twelve Data</strong>, известного своей скоростью и точностью.</li>
+                            <li><strong>Резервный API:</strong> В случае, если Twelve Data не отвечает (из-за лимитов или технических сбоев), система <strong>автоматически и бесшовно переключается</strong> на <strong>Financial Modeling Prep (FMP)</strong> и продолжает работу.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Резервирование Источников Новостей:</strong>
+                        <ul>
+                            <li><strong>Основной API:</strong> Новости загружаются через <strong>NewsData.io</strong>.</li>
+                            <li><strong>Резервный API:</strong> При превышении лимита или сбое, система мгновенно переключается на <strong>GNews</strong> для обеспечения непрерывного потока новостной информации.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Резервирование AI-анализа:</strong>
+                        <ul>
+                            <li>Даже для анализа новостей мы используем <strong>пул из нескольких API-ключей Gemini</strong>. Если один ключ достигает своего минутного лимита, система автоматически подхватывает следующий из списка, обеспечивая непрерывность анализа.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>Эта многоуровневая защита гарантирует, что пользователь получит прогноз и данные практически в любой ситуации.</p>
+
+                <h3><i data-lucide="pie-chart"></i>3. Вероятность Прогноза: Прозрачность и Уверенность</h3>
+                <p>Мы не просто даем сигнал — мы показываем, насколько сами в нем уверены. Показатель <strong>"Вероятность"</strong> — это динамическая оценка надежности прогноза в процентах, которая рассчитывается на основе нескольких факторов:</p>
+                <ul>
+                    <li><strong>Сила Технических Сигналов:</strong> Чем более "чистые" и однозначные сигналы поступают от индикаторов (например, RSI глубоко в зоне перепроданности), тем выше вероятность.</li>
+                    <li><strong>Устойчивость Тренда:</strong> Сильный, направленный тренд повышает уверенность в сигнале по его направлению.</li>
+                    <li><strong>Доступность Данных:</strong> Это ключевой момент. Если все API работают в штатном режиме, вероятность рассчитывается по полной формуле. Однако, если, например, <strong>новостной поток недоступен, вероятность прогноза автоматически штрафуется на 20%</strong>. Пользователь видит это снижение и понимает, что текущий сигнал основан только на техническом анализе, что требует большей осторожности.</li>
+                </ul>
+
+                <h3><i data-lucide="box"></i>4. Ключевые Функции для Профессиональной Работы</h3>
+                <ul>
+                    <li><strong>Адаптивные Таймфреймы:</strong> Пользователь может мгновенно переключаться между таймфреймами (1м, 5м, 15м и т.д.). Алгоритм автоматически перестраивает свои расчеты и длительность удержания позиции, предлагая как краткосрочные скальперские, так и более долгосрочные сигналы.</li>
+                    <li><strong>Динамические Параметры Сделки:</strong> На основе волатильности и силы тренда система рекомендует оптимальный <strong>размер позиции</strong> (% от депозита) и <strong>кредитное плечо/мультипликатор</strong>, помогая управлять рисками.</li>
+                    <li><strong>Интерактивные Новости с AI-кратким изложением:</strong> Пользователь видит не только заголовок новости, но и может по клику получить краткую выжимку ее сути на русском языке, сгенерированную нейросетью Gemini в реальном времени.</li>
+                    <li><strong>Сохранение Пользовательских Настроек:</strong> Платформа запоминает последний выбранный инструмент, таймфрейм и даже масштаб графика, чтобы при следующем визите пользователь мог мгновенно продолжить работу.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
