@@ -15,6 +15,7 @@
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         :root {
@@ -24,6 +25,8 @@
             --card-bg: #ffffff;
             --border-color: #dee2e6;
             --accent-blue: #0d6efd;
+            --marquee-bg: #1f1f1f;
+            --marquee-color: #FFD700;
         }
 
         [data-bs-theme="dark"] {
@@ -36,68 +39,87 @@
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            overflow: hidden; /* Prevent scrollbars from the video */
+            overflow: hidden; /* Prevent scrollbars */
+            background-color: #0a192f; /* Стильный темно-синий */
         }
-
-        .video-background {
+        
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            object-fit: cover;
             z-index: -2;
         }
 
-        .video-overlay {
+        .background-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: radial-gradient(circle at 20% 30%, rgba(13, 110, 253, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(13, 110, 253, 0.05), transparent 50%);
+            backdrop-filter: blur(4px); /* Размытие уменьшено до 20% от первоначального значения */
             z-index: -1;
         }
         
-        [data-bs-theme="light"] .video-overlay {
-             background-color: rgba(255, 255, 255, 0.5);
-        }
-
         .navbar {
-            background-color: rgba(var(--card-bg-rgb, 255 255 255), 0.8);
+            background-color: rgba(var(--card-bg-rgb, 255 255 255), 0.5);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             border-bottom: 1px solid var(--border-color);
         }
         
         [data-bs-theme="dark"] .navbar {
-             background-color: rgba(var(--card-bg-rgb, 30 34 45), 0.8);
+             background-color: rgba(var(--card-bg-rgb, 30 34 45), 0.5);
+        }
+
+        .marquee-container {
+            background-color: var(--marquee-bg);
+            color: var(--marquee-color);
+            padding: 0.5rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 40s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .marquee-item {
+            display: inline-block;
+            margin: 0 2rem;
+            font-size: 0.9rem;
         }
 
         .hero-section {
-            height: calc(100vh - 56px); /* Full height minus navbar */
+            height: calc(100vh - 56px - 40px);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: white;
-        }
-        
-        [data-bs-theme="light"] .hero-section {
-             color: #000;
+            color: white; /* Текст всегда белый */
         }
 
         .hero-section h1 {
             font-size: 4.5rem;
             font-weight: 800;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5); /* Усиленная тень для читаемости */
         }
         
         .hero-section .lead {
             font-size: 1.25rem;
             max-width: 600px;
             margin: 1.5rem auto;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Усиленная тень для читаемости */
         }
         
         .btn-trade {
@@ -113,30 +135,21 @@
         }
         
         @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 2.5rem;
-            }
-            .hero-section .lead {
-                font-size: 1rem;
-            }
-            .btn-trade {
-                font-size: 1rem;
-                padding: 0.6rem 1.8rem;
-            }
+            .hero-section h1 { font-size: 2.5rem; }
+            .hero-section .lead { font-size: 1rem; }
+            .btn-trade { font-size: 1rem; padding: 0.6rem 1.8rem; }
+            .marquee-item { margin: 0 1rem; }
         }
     </style>
 </head>
 <body>
     
-    <video autoplay muted loop class="video-background">
-      <source src="https://videos.pexels.com/video-files/8343419/8343419-hd_1920_1080_25fps.mp4" type="video/mp4">
-      Ваш браузер не поддерживает видео.
-    </video>
-    <div class="video-overlay"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="background-overlay"></div>
 
     <nav class="navbar navbar-expand-lg sticky-top">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="dashboard.html">
+        <a class="navbar-brand fw-bold" href="index.html">
             <i data-lucide="activity" class="text-primary"></i>
             SYNTERA AI TRADING
         </a>
@@ -146,7 +159,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="dashboard.html">Главная</a>
+              <a class="nav-link active" aria-current="page" href="index.html">Главная</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="trader.html">Trading LAB</a>
@@ -161,6 +174,12 @@
         </div>
       </div>
     </nav>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+    </div>
 
     <main class="hero-section">
         <div class="container">
@@ -180,21 +199,114 @@
         // Optional: Detect user's preferred theme
         const storedTheme = localStorage.getItem('theme');
         const getPreferredTheme = () => {
-            if (storedTheme) {
-                return storedTheme;
-            }
+            if (storedTheme) return storedTheme;
             return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         };
-
         const setTheme = (theme) => {
-            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', theme);
-            }
+            document.documentElement.setAttribute('data-bs-theme', theme);
         };
-
         setTheme(getPreferredTheme());
+
+        // Marquee Logic
+        const marqueeContent = document.querySelector('.marquee-content');
+        const SUPABASE_URL = 'https://hlwvsfjxvaackjqqfiuz.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsd3ZzZmp4dmFhY2tqcXFmaXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwNDQ1MjcsImV4cCI6MjA2NjYyMDUyN30.Jf6TuSh-6FcZFa69BgCG5djVIIDWGR8ZTWVrMDPoZLA';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function updateMarquee() {
+            // Get total user count from Supabase
+            const { count: totalUserCount, error } = await supabaseClient.from('users').select('*', { count: 'exact', head: true });
+            
+            // Get total daily signal count for all users from localStorage
+            let totalSignalData = JSON.parse(localStorage.getItem('dailySignalCount')) || {};
+            const today = new Date().toISOString().slice(0, 10);
+            if (totalSignalData.date !== today) {
+                totalSignalData = { date: today, count: 0 };
+                localStorage.setItem('dailySignalCount', JSON.stringify(totalSignalData));
+            }
+
+            // Get personal user stats from localStorage (these would be set in trader.html)
+            const userTradeCount = (JSON.parse(localStorage.getItem('userTradeCount')) || { count: 0 }).count;
+            const userSignalCount = (JSON.parse(localStorage.getItem('userSignalCount')) || { count: 0 }).count;
+
+            // Simulated data
+            const tradesLastHour = Math.floor(Math.random() * 5) + 1;
+            const avgROI = (Math.random() * 2 + 0.5).toFixed(1);
+            const latency = Math.floor(Math.random() * 30) + 15;
+            
+            const items = [
+                `Подключено трейдеров: ${totalUserCount || 'N/A'}`,
+                `Сделок за час: ${tradesLastHour} | Вы совершили: ${userTradeCount} сделок`,
+                `Средний ROI: ${avgROI}%`,
+                `Прогнозов сегодня: ${totalSignalData.count} | У вас: ${userSignalCount} прогнозов`,
+                `Подключено API: 6`,
+                `Ошибок системы: 0`,
+                `Источники данных: TwelveData, FMP, NewsData, GNews, Gemini AI`
+            ];
+
+            const marqueeHTML = items.map(item => `<span class="marquee-item">${item}</span>`).join('|');
+            // Duplicate content to ensure smooth endless scroll
+            marqueeContent.innerHTML = marqueeHTML + ' | ' + marqueeHTML;
+        }
+
+        updateMarquee();
+        setInterval(updateMarquee, 60000); // Update every minute
+
+        // Background Candle Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+        let candles = [];
+        const candleWidth = 10;
+        let animationInterval, animationFrameId;
+
+        function createCandle() {
+            const open = height / 2 + (Math.random() - 0.5) * 300;
+            const close = open + (Math.random() - 0.5) * 60;
+            const high = Math.max(open, close) + Math.random() * 30;
+            const low = Math.min(open, close) - Math.random() * 30;
+            candles.push({ x: width, open, high, low, close });
+            if (candles.length > width / (candleWidth + 8)) {
+                candles.shift();
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+            candles.forEach((candle) => {
+                candle.x -= 1.5;
+                ctx.strokeStyle = candle.close >= candle.open ? 'rgba(25, 135, 84, 0.4)' : 'rgba(220, 53, 69, 0.4)';
+                ctx.fillStyle = ctx.strokeStyle;
+                
+                ctx.beginPath();
+                ctx.moveTo(candle.x + candleWidth / 2, candle.high);
+                ctx.lineTo(candle.x + candleWidth / 2, candle.low);
+                ctx.stroke();
+
+                ctx.fillRect(candle.x, Math.min(candle.open, candle.close), candleWidth, Math.abs(candle.open - candle.close));
+            });
+        }
+        
+        function animate() {
+            draw();
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        function startAnimation() {
+            if(animationInterval) clearInterval(animationInterval);
+            if(animationFrameId) cancelAnimationFrame(animationFrameId);
+            
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            candles = [];
+            createCandle();
+            animationInterval = setInterval(createCandle, 250);
+            animate();
+        }
+        
+        window.addEventListener('resize', startAnimation);
+        startAnimation();
 
     </script>
     <!-- Bootstrap JS -->
