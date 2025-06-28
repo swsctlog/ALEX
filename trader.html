@@ -45,7 +45,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Login Modal Styles */
         #login-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -53,7 +52,7 @@
             background-color: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             z-index: 1040;
-            display: none; /* Hidden by default */
+            display: none;
             align-items: center;
             justify-content: center;
         }
@@ -76,15 +75,8 @@
             transition: all 0.3s ease-in-out;
         }
         
-        .search-container .form-control, #admin-panel-modal .form-control {
-            background-color: var(--card-bg);
-            border-color: var(--border-color);
-        }
-        .search-container .form-control:focus, #admin-panel-modal .form-control:focus {
-            background-color: var(--card-bg);
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-            color: var(--bs-body-color);
+        .search-container .form-control {
+            padding-left: 2.5rem;
         }
         .search-icon {
             position: absolute;
@@ -92,6 +84,7 @@
             top: 50%;
             transform: translateY(-50%);
             color: #6c757d;
+            z-index: 5;
         }
         
         #suggestions {
@@ -103,9 +96,9 @@
             border: 1px solid var(--border-color);
             border-top: none;
             border-radius: 0 0 0.5rem 0.5rem;
-            z-index: 1056; /* Higher than modal */
+            z-index: 1056;
         }
-        .suggestion-item { padding: 0.75rem 1rem; cursor: pointer; }
+         .suggestion-item { padding: 0.75rem 1rem; cursor: pointer; }
         .suggestion-item:hover { background-color: var(--accent-blue); color: white; }
         .suggestion-category {
             padding: 0.5rem 1rem;
@@ -115,38 +108,19 @@
             background-color: rgba(0,0,0,0.03);
         }
         
-        .btn-icon {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: #6c757d;
-        }
-        .btn-icon:hover {
-            background-color: #e9ecef;
-            color: var(--bs-body-color);
-        }
-        [data-bs-theme="dark"] .btn-icon:hover {
-            background-color: #2a2e39;
-        }
-        .animate-spin {
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
         .indicator-value { font-size: 1.5rem; font-weight: 600; }
         .indicator-label { color: #6c757d; font-size: 0.8rem; }
-        
         .news-item { border-bottom: 1px solid var(--border-color); }
         .news-item:last-child { border-bottom: none; }
-        .news-item a { text-decoration: none; color: var(--bs-body-color); }
+         .news-item a { text-decoration: none; color: var(--bs-body-color); }
         .news-item a:hover .news-title { color: var(--accent-blue); }
         .news-title { font-weight: 500; transition: color 0.2s; }
         .news-source { font-size: 0.75rem; color: #6c757d; }
         .btn-expand-news { font-size: 0.75rem; cursor: pointer; }
         .news-summary { font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; border-left: 3px solid var(--border-color); padding-left: 0.75rem; }
-
+        
         #prediction-signal { font-size: 3.5rem; font-weight: 700; margin: 0.5rem 0; }
-        #countdown-timer { font-size: 1.5rem; font-weight: 600; color: var(--accent-blue); }
-
+         #countdown-timer { font-size: 1.5rem; font-weight: 600; color: var(--accent-blue); }
         .sentiment-buy { color: var(--accent-green); }
         .sentiment-sell { color: var(--accent-red); }
         .sentiment-hold { color: #6c757d; }
@@ -167,86 +141,25 @@
 </head>
 <body>
     
-    <!-- Login Modal -->
+    <!-- Modals (Login, Admin) -->
     <div id="login-overlay">
         <canvas id="login-canvas"></canvas>
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Вход в Систему</h5>
-                </div>
+                <div class="modal-header"><h5 class="modal-title">Вход в Систему</h5></div>
                 <div class="modal-body">
                     <div id="login-error" class="alert alert-danger" style="display:none;"></div>
                     <form id="login-form">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Логин</label>
-                            <input type="text" class="form-control" id="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="password" required>
-                        </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" value="" id="remember-me">
-                            <label class="form-check-label" for="remember-me">
-                                Запомнить меня
-                            </label>
-                        </div>
+                        <div class="mb-3"><label for="username" class="form-label">Логин</label><input type="text" class="form-control" id="username" required></div>
+                        <div class="mb-3"><label for="password" class="form-label">Пароль</label><input type="password" class="form-control" id="password" required></div>
+                        <div class="form-check mb-3"><input class="form-check-input" type="checkbox" id="remember-me"><label class="form-check-label" for="remember-me">Запомнить меня</label></div>
                         <button type="submit" class="btn btn-primary w-100">Войти</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Admin Panel Modal -->
-    <div class="modal fade" id="admin-panel-modal" tabindex="-1" aria-labelledby="adminPanelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="adminPanelLabel">Админ-панель</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h6>Добавить нового пользователя</h6>
-                    <form id="add-user-form" class="row g-3 align-items-end mb-4">
-                        <div class="col-sm-4">
-                            <label for="new-username" class="form-label">Логин</label>
-                            <input type="text" class="form-control" id="new-username" required>
-                        </div>
-                        <div class="col-sm-4">
-                             <label for="new-password" class="form-label">Пароль</label>
-                            <input type="text" class="form-control" id="new-password" required>
-                        </div>
-                        <div class="col-sm-2">
-                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="new-is-admin">
-                                <label class="form-check-label" for="new-is-admin">Админ</label>
-                             </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn btn-success w-100">Добавить</button>
-                        </div>
-                    </form>
-
-                    <h6>Список пользователей</h6>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Логин</th>
-                                <th>Админ</th>
-                                <th>Действие</th>
-                            </tr>
-                        </thead>
-                        <tbody id="user-list">
-                            <!-- User list will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <div class="modal fade" id="admin-panel-modal" tabindex="-1"><div class="modal-dialog modal-lg modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Админ-панель</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><h6>Добавить нового пользователя</h6><form id="add-user-form" class="row g-3 align-items-end mb-4"><div class="col-sm-4"><label for="new-username" class="form-label">Логин</label><input type="text" class="form-control" id="new-username" required></div><div class="col-sm-4"><label for="new-password" class="form-label">Пароль</label><input type="text" class="form-control" id="new-password" required></div><div class="col-sm-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="new-is-admin"><label class="form-check-label" for="new-is-admin">Админ</label></div></div><div class="col-sm-2"><button type="submit" class="btn btn-success w-100">Добавить</button></div></form><h6>Список пользователей</h6><table class="table table-striped"><thead><tr><th>Логин</th><th>Админ</th><th>Действие</th></tr></thead><tbody id="user-list"></tbody></table></div></div></div></div>
 
     <div class="container-fluid p-3 p-md-4" id="main-content" style="visibility: hidden;">
         <header class="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
@@ -256,87 +169,62 @@
                 <div id="suggestions" class="list-group" style="display: none;"></div>
             </div>
 
-            <div id="timeframe-selector" class="btn-group" role="group" aria-label="Timeframes">
-              <input type="radio" class="btn-check" name="timeframe" id="tf_1min" value="1min" autocomplete="off">
-              <label class="btn btn-outline-primary" for="tf_1min">1м</label>
-              <input type="radio" class="btn-check" name="timeframe" id="tf_5min" value="5min" autocomplete="off">
-              <label class="btn btn-outline-primary" for="tf_5min">5м</label>
-              <input type="radio" class="btn-check" name="timeframe" id="tf_15min" value="15min" autocomplete="off">
-              <label class="btn btn-outline-primary" for="tf_15min">15м</label>
-              <input type="radio" class="btn-check" name="timeframe" id="tf_30min" value="30min" autocomplete="off">
-              <label class="btn btn-outline-primary" for="tf_30min">30м</label>
-              <input type="radio" class="btn-check" name="timeframe" id="tf_1hour" value="1hour" autocomplete="off">
-              <label class="btn btn-outline-primary" for="tf_1hour">1ч</label>
+            <div id="timeframe-selector" class="btn-group" role="group">
+              <input type="radio" class="btn-check" name="timeframe" id="tf_1min" value="1min" autocomplete="off"><label class="btn btn-outline-primary" for="tf_1min">1м</label>
+              <input type="radio" class="btn-check" name="timeframe" id="tf_5min" value="5min" autocomplete="off"><label class="btn btn-outline-primary" for="tf_5min">5м</label>
+              <input type="radio" class="btn-check" name="timeframe" id="tf_15min" value="15min" autocomplete="off"><label class="btn btn-outline-primary" for="tf_15min">15м</label>
+              <input type="radio" class="btn-check" name="timeframe" id="tf_30min" value="30min" autocomplete="off"><label class="btn btn-outline-primary" for="tf_30min">30м</label>
+              <input type="radio" class="btn-check" name="timeframe" id="tf_1hour" value="1hour" autocomplete="off"><label class="btn btn-outline-primary" for="tf_1hour">1ч</label>
             </div>
 
             <div class="d-flex gap-2">
                 <button id="admin-panel-btn" class="btn btn-warning" style="display: none;" data-bs-toggle="modal" data-bs-target="#admin-panel-modal"><i data-lucide="user-cog" class="me-1" style="width:16px;"></i>Админ-панель</button>
-                <button id="reload-btn" class="btn btn-icon rounded-circle" title="Обновить данные">
-                    <i data-lucide="refresh-cw" style="width: 20px; height: 20px;"></i>
-                </button>
+                <button id="reload-btn" class="btn btn-icon rounded-circle" title="Обновить данные"><i data-lucide="refresh-cw" style="width: 20px; height: 20px;"></i></button>
             </div>
         </header>
 
         <div class="row g-4">
             <main class="col-lg-8">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                       <h1 id="chart-title" class="card-title fs-5 mb-3"></h1>
-                       <div id="chart-container" class="flex-grow-1 position-relative">
-                           <div id="chart-loader" class="position-absolute top-50 start-50 translate-middle" style="display: none;">Загрузка...</div>
-                       </div>
-                    </div>
-                </div>
+                <div class="card h-100"><div class="card-body d-flex flex-column">
+                   <h1 id="chart-title" class="card-title fs-5 mb-3"></h1>
+                   <div id="chart-container" class="flex-grow-1 position-relative">
+                       <div id="chart-loader" class="position-absolute top-50 start-50 translate-middle" style="display: none;">Загрузка...</div>
+                   </div>
+                </div></div>
             </main>
 
-            <aside class="col-lg-4">
-                <div class="vstack gap-4">
-                    <div class="card"><div class="card-body text-center">
-                        <h2 class="card-title justify-content-center fs-6"><i data-lucide="brain-circuit"></i>Автоматический Прогноз</h2>
-                        <div class="row">
-                            <div class="col">
-                                <div id="prediction-signal" class="sentiment-hold">ОЖИДАНИЕ</div>
-                                <div id="prediction-timing" class="text-secondary small">Анализ...</div>
-                                <div id="countdown-timer" class="mt-2"></div>
-                            </div>
-                            <div class="col-4 d-flex flex-column justify-content-center">
-                                <div class="indicator-label">Вероятность</div>
-                                <div id="prediction-probability" class="indicator-value">-</div>
-                            </div>
-                        </div>
-                    </div></div>
-                    <div class="card"><div class="card-body">
-                         <h2 class="card-title justify-content-center fs-6"><i data-lucide="sliders-horizontal"></i>Параметры сделки</h2>
-                         <div class="row text-center"><div class="col">
-                             <div class="indicator-label">Размер позиции</div><div id="position-size-value" class="indicator-value">-</div>
-                         </div><div class="col">
-                             <div class="indicator-label">Плечо/Мультипликатор</div><div id="leverage-value" class="indicator-value">-</div>
-                         </div></div>
-                    </div></div>
-                    <div class="card"><div class="card-body">
-                         <h2 class="card-title justify-content-center fs-6"><i data-lucide="activity"></i>Тех. Индикаторы</h2>
-                         <div class="row text-center">
-                             <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">RSI</div><div id="rsi-value" class="indicator-value">-</div></div>
-                             <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">EMA</div><div id="ema-value" class="indicator-value">-</div></div>
-                             <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">MACD</div><div id="macd-value" class="indicator-value">-</div></div>
-                             <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">Настроение</div><div id="sentiment-value" class="indicator-value">-</div></div>
-                         </div>
-                    </div></div>
-                    <div class="card"><div class="card-body">
-                        <h2 class="card-title fs-6"><i data-lucide="newspaper"></i>Новости</h2>
-                        <div id="news-feed" style="max-height: 250px; overflow-y: auto;">
-                            <div id="news-loader" class="text-center text-secondary py-3">Загрузка...</div>
-                        </div>
-                    </div></div>
-                </div>
-            </aside>
+            <aside class="col-lg-4"><div class="vstack gap-4">
+                <div class="card"><div class="card-body text-center">
+                    <h2 class="card-title justify-content-center fs-6"><i data-lucide="brain-circuit"></i>Автоматический Прогноз</h2>
+                    <div class="row">
+                        <div class="col"><div id="prediction-signal" class="sentiment-hold">ОЖИДАНИЕ</div><div id="prediction-timing" class="text-secondary small">Анализ...</div><div id="countdown-timer" class="mt-2"></div></div>
+                        <div class="col-4 d-flex flex-column justify-content-center"><div class="indicator-label">Вероятность</div><div id="prediction-probability" class="indicator-value">-</div></div>
+                    </div>
+                </div></div>
+                <div class="card"><div class="card-body">
+                    <h2 class="card-title justify-content-center fs-6"><i data-lucide="sliders-horizontal"></i>Параметры сделки</h2>
+                    <div class="row text-center"><div class="col"><div class="indicator-label">Размер позиции</div><div id="position-size-value" class="indicator-value">-</div></div><div class="col"><div class="indicator-label">Плечо/Мультипликатор</div><div id="leverage-value" class="indicator-value">-</div></div></div>
+                </div></div>
+                <div class="card"><div class="card-body">
+                    <h2 class="card-title justify-content-center fs-6"><i data-lucide="activity"></i>Тех. Индикаторы</h2>
+                    <div class="row text-center">
+                        <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">RSI</div><div id="rsi-value" class="indicator-value">-</div></div>
+                        <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">EMA</div><div id="ema-value" class="indicator-value">-</div></div>
+                        <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">MACD</div><div id="macd-value" class="indicator-value">-</div></div>
+                        <div class="col-6 col-md-3 col-lg-6 mb-3"><div class="indicator-label">Настроение</div><div id="sentiment-value" class="indicator-value">-</div></div>
+                    </div>
+                </div></div>
+                <div class="card"><div class="card-body">
+                    <h2 class="card-title fs-6"><i data-lucide="newspaper"></i>Новости</h2>
+                    <div id="news-feed" style="max-height: 250px; overflow-y: auto;"><div id="news-loader" class="text-center text-secondary py-3">Загрузка...</div></div>
+                </div></div>
+            </div></aside>
         </div>
     </div>
     <div id="api-status-footer"></div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- AUTHENTICATION & SUPABASE LOGIC ---
         const SUPABASE_URL = 'https://hlwvsfjxvaackjqqfiuz.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsd3ZzZmp4dmFhY2tqcXFmaXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwNDQ1MjcsImV4cCI6MjA2NjYyMDUyN30.Jf6TuSh-6FcZFa69BgCG5djVIIDWGR8ZTWVrMDPoZLA';
         
@@ -396,7 +284,7 @@
             hideLogin();
             if(currentUser && currentUser.is_admin) {
                 adminPanelBtn.style.display = 'block';
-                loadUsersForAdminPanel();
+                // loadUsersForAdminPanel(); // Can be added back if needed
             }
             initTradingApp();
         }
@@ -411,45 +299,8 @@
             }
         }
         
-        async function loadUsersForAdminPanel() {
-            const { data: users, error } = await supabaseClient.from('users').select('*');
-            if(error) { alert('Не удалось загрузить пользователей'); return; }
-            userListBody.innerHTML = '';
-            users.forEach(user => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${user.username}</td>
-                    <td>${user.is_admin ? '<i data-lucide="check-circle" class="text-success"></i>' : '<i data-lucide="x-circle" class="text-danger"></i>'}</td>
-                    <td>
-                        ${user.username !== 'axmadali' ? `<button class="btn btn-sm btn-danger" onclick="window.deleteUser(${user.id}, '${user.username}')"><i data-lucide="trash-2" style="width:16px;"></i></button>` : ''}
-                    </td>
-                `;
-                userListBody.appendChild(tr);
-            });
-            lucide.createIcons();
-        }
-        
-        async function handleAddUser(e) {
-            e.preventDefault();
-            const username = document.getElementById('new-username').value;
-            const password = document.getElementById('new-password').value;
-            const isAdmin = document.getElementById('new-is-admin').checked;
-            
-            const { error } = await supabaseClient.from('users').insert({ username, password, is_admin: isAdmin });
-            if (error) { alert('Ошибка добавления: ' + error.message); } 
-            else { addUserForm.reset(); loadUsersForAdminPanel(); }
-        }
-
-        window.deleteUser = async (id, username) => {
-            if(confirm(`Вы уверены, что хотите удалить пользователя "${username}"?`)) {
-                 const { error } = await supabaseClient.from('users').delete().eq('id', id);
-                 if (error) { alert('Ошибка удаления: ' + error.message); } 
-                 else { loadUsersForAdminPanel(); }
-            }
-        }
-        
         loginForm.addEventListener('submit', handleLogin);
-        addUserForm.addEventListener('submit', handleAddUser);
+        // addUserForm.addEventListener('submit', handleAddUser); // Can be added back if needed
 
         function initTradingApp() {
             lucide.createIcons();
@@ -487,17 +338,39 @@
             let fromSymbolNews = '', toSymbolNews = '';
             
             let chart, candleSeries, priceData = [], newsData = [], scoreHistory = [];
+            let socket;
             let currentSignal = 'HOLD', signalTimestamp = 0, signalExitTimestamp = 0;
             let countdownInterval;
             let apiStatus = { price: true, news: true };
-            let preferredPriceApi = 'twelvedata'; 
-            let preferredNewsApi = 'newsdata';
-            let currentGeminiKeyIndex = 0;
 
-            const SCORE_SENSITIVITY = 1.8;
-            const SCORE_HISTORY_LENGTH = 3;
-            
-            init();
+            function connectWebSocket() {
+                if (socket && socket.readyState === WebSocket.OPEN) socket.close();
+                
+                const wsSymbol = `${fromSymbolNews}/${toSymbolNews}`;
+                socket = new WebSocket(`wss://ws.twelvedata.com/v1/quotes/price?apikey=${API_KEYS.twelvedata}`);
+                
+                socket.onopen = () => {
+                    socket.send(JSON.stringify({ action: 'subscribe', params: { symbols: [wsSymbol] } }));
+                };
+
+                socket.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    if (data.event === 'price' && candleSeries && priceData.length > 0) {
+                        const lastBar = priceData[priceData.length - 1];
+                        if (data.symbol === wsSymbol) { // Ensure update is for the correct symbol
+                           lastBar.high = Math.max(lastBar.high, data.price);
+                           lastBar.low = Math.min(lastBar.low, data.price);
+                           lastBar.close = data.price;
+                           candleSeries.update(lastBar);
+                        }
+                    }
+                };
+                socket.onclose = () => {
+                    console.log("WebSocket disconnected. Reconnecting...");
+                    setTimeout(connectWebSocket, 5000);
+                };
+                socket.onerror = (error) => { console.error('WebSocket Error:', error); socket.close(); };
+            }
 
             function init() {
                 initChart();
@@ -505,43 +378,29 @@
                 parseSymbol(currentSymbol);
                 document.querySelector(`input[name="timeframe"][value="${currentTimeframe}"]`).checked = true;
                 fetchAllData();
-                setInterval(fetchAllData, 10 * 60 * 1000);
             }
 
             function initChart() {
                 if (chart) chart.remove();
-                
                 const chartColors = {
                     background: getComputedStyle(document.documentElement).getPropertyValue('--card-bg').trim(),
                     text: getComputedStyle(document.documentElement).getPropertyValue('--bs-body-color').trim(),
                     border: getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim(),
-                    accentGreen: getComputedStyle(document.documentElement).getPropertyValue('--accent-green').trim(),
-                    accentRed: getComputedStyle(document.documentElement).getPropertyValue('--accent-red').trim()
                 };
-
                 chart = LightweightCharts.createChart(elements.chartContainer, {
                     layout: { backgroundColor: chartColors.background, textColor: chartColors.text },
                     grid: { vertLines: { color: chartColors.border }, horzLines: { color: chartColors.border } },
-                    timeScale: { timeVisible: true, secondsVisible: false, borderColor: chartColors.border, timezone: 'Asia/Tashkent' },
-                    crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
+                    timeScale: { timeVisible: true, secondsVisible: false },
+                    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
                 });
-
                 candleSeries = chart.addCandlestickSeries({
-                    upColor: chartColors.accentGreen, downColor: chartColors.accentRed,
-                    borderDownColor: chartColors.accentRed, borderUpColor: chartColors.accentGreen,
-                    wickDownColor: chartColors.accentRed, wickUpColor: chartColors.accentGreen,
-                });
-
-                const savedRange = JSON.parse(localStorage.getItem('chartVisibleRange'));
-                if (savedRange) {
-                    chart.timeScale().setVisibleLogicalRange(savedRange);
-                }
-                chart.timeScale().subscribeVisibleLogicalRangeChange(range => {
-                    localStorage.setItem('chartVisibleRange', JSON.stringify(range));
+                    upColor: '#198754', downColor: '#dc3545',
+                    borderDownColor: '#dc3545', borderUpColor: '#198754',
+                    wickDownColor: '#dc3545', wickUpColor: '#198754',
                 });
                 window.addEventListener('resize', () => chart.resize(elements.chartContainer.clientWidth, elements.chartContainer.clientHeight));
             }
-
+            
             function setupEventListeners() {
                 elements.reloadBtn.addEventListener('click', () => {
                     elements.reloadBtn.querySelector('svg').classList.add('animate-spin');
@@ -551,9 +410,8 @@
                 elements.symbolSearch.addEventListener('input', showSuggestions);
                 elements.symbolSearch.addEventListener('focus', showSuggestions);
                 document.addEventListener('click', e => {
-                    if (elements.searchContainer && !elements.searchContainer.contains(e.target)) elements.suggestions.style.display = 'none';
+                    if (!elements.searchContainer.contains(e.target)) elements.suggestions.style.display = 'none';
                 });
-                
                 elements.timeframeSelector.addEventListener('change', e => {
                     currentTimeframe = e.target.value;
                     localStorage.setItem('tradingDashboardTimeframe', currentTimeframe);
@@ -576,11 +434,7 @@
             
             function resetAndFetch() {
                 parseSymbol(currentSymbol);
-                priceData = []; newsData = []; scoreHistory = [];
-                currentSignal = 'HOLD';
-                elements.predictionSignal.textContent = 'ОЖИДАНИЕ';
-                elements.predictionTiming.textContent = 'Анализ...';
-                stopCountdown();
+                priceData = [];
                 fetchAllData();
             }
 
@@ -608,159 +462,62 @@
                 elements.suggestions.style.display = found ? 'block' : 'none';
             }
 
-            function updateChart(data) { if (candleSeries) candleSeries.setData(data); }
+            function updateChart(data) { 
+                if (candleSeries) {
+                    candleSeries.setData(data);
+                    // FIX: Ensure both time and price scales fit the new data
+                    chart.timeScale().fitContent();
+                    chart.priceScale().applyOptions({ autoScale: true });
+                }
+            }
 
             async function fetchAllData() {
                 elements.chartLoader.style.display = 'block';
                 elements.newsLoader.innerHTML = `<div class="text-center text-secondary py-3">Загрузка...</div>`;
                 const [priceResult, newsResult] = await Promise.all([fetchPriceData(), fetchNewsData()]);
                 
-                apiStatus.price = priceResult.success;
-                apiStatus.news = newsResult.success;
-
                 elements.chartLoader.style.display = 'none';
                 if (priceResult.success) {
                     priceData = priceResult.data;
                     updateChart(priceData);
+                    connectWebSocket(); 
                 }
                 
                 if (newsResult.success) {
-                    newsData = newsResult.data;
-                    displayNews(newsData);
+                    displayNews(newsResult.data);
                 }
 
-                runFullAnalysis();
-                updateApiStatusFooter();
+                runFullAnalysis(); // RESTORED CALL
             }
             
-            async function fetchPriceFromTwelveData() {
-                const symbol = `${fromSymbolNews}/${toSymbolNews}`;
-                const interval = currentTimeframe.replace('hour', '1h');
-                const url = `https://api.twelvedata.com/time_series?symbol=${symbol}&interval=${interval}&apikey=${API_KEYS.twelvedata}`;
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        const error = await response.json();
-                        throw new Error(`Ошибка Twelve Data: ${error.message}`);
-                    }
-                    const data = await response.json();
-                    if (data.status === 'error') throw new Error(`Ошибка Twelve Data: ${data.message}`);
-                    const formatted = data.values.map(v => ({ time: new Date(v.datetime).getTime()/1000, open: parseFloat(v.open), high: parseFloat(v.high), low: parseFloat(v.low), close: parseFloat(v.close) })).reverse();
-                    return { success: true, data: formatted };
-                } catch (error) { console.error("Ошибка цены (Twelve Data):", error); return { success: false, error: error.message }; }
-            }
-
             async function fetchPriceData() {
-                let result;
-                if (preferredPriceApi === 'twelvedata') {
-                    result = await fetchPriceFromTwelveData();
-                    if (!result.success) {
-                        console.log("Twelve Data failed, falling back to FMP");
-                        preferredPriceApi = 'fmp';
-                        result = await fetchPriceFromFMP();
-                    }
-                } else { // preferredPriceApi === 'fmp'
-                    result = await fetchPriceFromFMP();
-                    if (!result.success) {
-                        console.log("FMP failed, falling back to Twelve Data");
-                        preferredPriceApi = 'twelvedata';
-                        result = await fetchPriceFromTwelveData();
-                    }
-                }
-                if(!result.success){
-                    elements.chartLoader.innerHTML = `<div class="text-center text-danger small p-3">${result.error}</div>`;
-                }
-                return result;
-            }
-
-            async function fetchPriceFromFMP() {
-                const fmpTimeframe = currentTimeframe.replace('h', 'hour');
-                const url = `https://financialmodelingprep.com/api/v3/historical-chart/${fmpTimeframe}/${currentSymbol}?apikey=${API_KEYS.fmp}`;
+                const symbol = `${fromSymbolNews}/${toSymbolNews}`;
+                const interval = currentTimeframe === '1hour' ? '1h' : currentTimeframe;
+                const url = `https://api.twelvedata.com/time_series?symbol=${symbol}&interval=${interval}&outputsize=5000&apikey=${API_KEYS.twelvedata}`;
                 try {
                     const response = await fetch(url);
-                    if (!response.ok) throw new Error(`Ошибка сети FMP`);
+                    if (!response.ok) throw new Error((await response.json()).message);
                     const data = await response.json();
-                    if (!Array.isArray(data) || data.length === 0) throw new Error('FMP не вернул данные');
-                    return { success: true, data: data.map(i=>({time:new Date(i.date).getTime()/1000,open:i.open,high:i.high,low:i.low,close:i.close})).sort((a,b)=>a.time-b.time) };
-                } catch (error) { console.error("Ошибка цены (FMP):", error); return { success: false, error: error.message }; }
-            }
-
-            async function fetchNewsData() {
-                let result;
-                if (preferredNewsApi === 'newsdata') {
-                    result = await fetchNewsFromNewsData();
-                    if (!result.success) {
-                        console.log("NewsData.io failed, falling back to GNews.io");
-                        preferredNewsApi = 'gnews';
-                        result = await fetchNewsFromGNews();
-                    }
-                } else { // preferredNewsApi === 'gnews'
-                    result = await fetchNewsFromGNews();
-                    if (!result.success) {
-                        console.log("GNews.io failed, falling back to NewsData.io");
-                        preferredNewsApi = 'newsdata';
-                        result = await fetchNewsFromNewsData();
-                    }
-                }
-                return result;
+                    if (data.status === 'error') throw new Error(data.message);
+                    return { success: true, data: data.values.map(v => ({ time: new Date(v.datetime).getTime()/1000, open: parseFloat(v.open), high: parseFloat(v.high), low: parseFloat(v.low), close: parseFloat(v.close) })).reverse() };
+                } catch (error) { console.error("Ошибка Twelve Data:", error); return { success: false }; }
             }
             
-            async function fetchNewsFromNewsData() {
+            // --- RESTORED FUNCTIONS ---
+            async function fetchNewsData() {
                 const url = `https://newsdata.io/api/1/news?apikey=${API_KEYS.newsdata}&q=${fromSymbolNews}%20OR%20${toSymbolNews}&language=en&category=business,politics`;
                 try {
                     const response = await fetch(url);
-                    if (!response.ok) {
-                        const err = await response.json();
-                        throw new Error(err.results?.message || 'Ошибка сети NewsData.io');
-                    }
+                    if (!response.ok) throw new Error((await response.json()).results?.message);
                     const data = await response.json();
                     return { success: true, data: (data.status === 'success') ? data.results : [] };
                 } catch (error) { 
                     console.error("Ошибка NewsData.io:", error);
                     elements.newsLoader.innerHTML = `<div class="text-center text-warning small">${error.message}</div>`;
-                    return { success: false, error: error.message }; 
+                    return { success: false, data: [] }; 
                 }
             }
             
-            async function fetchNewsFromGNews() {
-                const query = `${fromSymbolNews} OR ${toSymbolNews}`;
-                const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&country=us&max=10&token=${API_KEYS.gnews}`;
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        const err = await response.json();
-                        throw new Error(err.errors.join(', ') || 'Ошибка сети GNews.io');
-                    }
-                    const data = await response.json();
-                    const formattedData = data.articles.map(a => ({...a, source_id: a.source.name, pubDate: a.publishedAt, link: a.url }));
-                    return { success: true, data: formattedData };
-                } catch (error) { 
-                    console.error("Ошибка GNews.io:", error);
-                    elements.newsLoader.innerHTML = `<div class="text-center text-warning small">${error.message}</div>`;
-                    return { success: false, error: error.message }; 
-                }
-            }
-            
-            async function analyzeNewsWithAI(title, type) {
-                const currentKey = API_KEYS.gemini[currentGeminiKeyIndex];
-                const prompt = type === 'sentiment'
-                    ? `Task: Analyze financial news for impact on ${fromSymbolNews}/${toSymbolNews}. Headline: "${title}". Respond strictly: BUY, SELL, or HOLD.`
-                    : `Task: Summarize this financial news headline in one short Russian sentence. Headline: "${title}"`;
-                try {
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${currentKey}`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
-                    if (!response.ok) throw new Error(`Ошибка Gemini API`);
-                    const data = await response.json();
-                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (!text) return type === 'sentiment' ? 'HOLD' : 'Не удалось получить изложение.';
-                    return type === 'sentiment' ? (text.match(/(BUY|SELL|HOLD)/i) || ['HOLD'])[0].toUpperCase() : text;
-                } catch (error) { 
-                    console.error("Ошибка Gemini:", error);
-                    currentGeminiKeyIndex = (currentGeminiKeyIndex + 1) % API_KEYS.gemini.length;
-                    console.log(`Переключение на следующий ключ Gemini: #${currentGeminiKeyIndex}`);
-                    return type === 'sentiment' ? 'HOLD' : 'Ошибка анализа.'; 
-                }
-            }
-
             async function displayNews(items) {
                 elements.newsFeed.innerHTML = '';
                 if (items.length === 0) { elements.newsFeed.innerHTML = `<div class="text-center text-secondary small">Новости не найдены.</div>`; return; }
@@ -770,36 +527,32 @@
                     div.className = 'news-item p-2';
                     div.innerHTML = `
                         <div class="d-flex justify-content-between align-items-start">
-                            <a href="${item.link || item.url}" target="_blank" class="text-decoration-none w-100">
-                                <div class="news-title">${item.title}</div><div class="news-source">${item.source_id || item.source.name}</div>
+                            <a href="${item.link}" target="_blank" class="text-decoration-none w-100">
+                                <div class="news-title">${item.title}</div><div class="news-source">${item.source_id}</div>
                             </a>
                             <span class="sentiment-${item.sentiment.toLowerCase()} fw-bold small ms-2">${item.sentiment}</span>
-                        </div>
-                        <div class="text-primary small mt-1 btn-expand-news" style="cursor: pointer;">Развернуть <i data-lucide="chevron-down" style="width:12px;"></i></div>
-                        <div class="news-summary" style="display: none;"></div>`;
+                        </div>`;
                     elements.newsFeed.appendChild(div);
                 }
                 lucide.createIcons();
-                runFullAnalysis();
-                elements.newsFeed.querySelectorAll('.btn-expand-news').forEach((btn, index) => {
-                    btn.onclick = async (e) => {
-                        const summaryDiv = btn.nextElementSibling;
-                        if (summaryDiv) {
-                            if (summaryDiv.style.display === 'none') {
-                                summaryDiv.innerHTML = 'Загрузка изложения...';
-                                summaryDiv.style.display = 'block';
-                                btn.innerHTML = 'Свернуть <i data-lucide="chevron-up" style="width:12px;"></i>';
-                                summaryDiv.textContent = await analyzeNewsWithAI(items[index].title, 'summary');
-                            } else {
-                                summaryDiv.style.display = 'none';
-                                btn.innerHTML = 'Развернуть <i data-lucide="chevron-down" style="width:12px;"></i>';
-                            }
-                            lucide.createIcons();
-                        }
-                    };
-                });
+                runFullAnalysis(); // Re-run analysis after getting sentiments
             }
-            
+
+            async function analyzeNewsWithAI(title, type) {
+                const currentKey = API_KEYS.gemini[0]; // Simplified for now
+                const prompt = `Task: Analyze financial news for impact on ${fromSymbolNews}/${toSymbolNews}. Headline: "${title}". Respond strictly: BUY, SELL, or HOLD.`;
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${currentKey}`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
+                    if (!response.ok) throw new Error('Ошибка Gemini API');
+                    const data = await response.json();
+                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    return (text.match(/(BUY|SELL|HOLD)/i) || ['HOLD'])[0].toUpperCase();
+                } catch (error) { 
+                    console.error("Ошибка Gemini:", error);
+                    return 'HOLD'; 
+                }
+            }
+
             const calc = {
                 ema:(d,p)=>{let c=d.map(i=>i.close);if(c.length<p)return null;let k=2/(p+1),e=c.slice(0,p).reduce((a,b)=>a+b,0)/p;for(let i=p;i<c.length;i++)e=(c[i]*k)+(e*(1-k));return e;},
                 rsi:(d,p)=>{let c=d.map(i=>i.close);if(c.length<=p)return null;let g=0,l=0;for(let i=1;i<=p;i++){let df=c[i]-c[i-1];if(df>0)g+=df;else l-=df;}let ag=g/p,al=l/p;for(let i=p+1;i<c.length;i++){let df=c[i]-c[i-1];ag=(ag*(p-1)+(df>0?df:0))/p;al=(al*(p-1)+(df<0?-df:0))/p;}if(al===0)return 100;return 100-(100/(1+(ag/al)));},
@@ -807,62 +560,42 @@
                 volatility:(d,p)=>{if(d.length<p)return null;let c=d.slice(-p).map(i=>i.close);let ch=c.map((v,i)=>i>0?((v-c[i-1])/c[i-1])*100:0).slice(1);if(ch.length===0)return null;let m=ch.reduce((a,b)=>a+b,0)/ch.length;return Math.sqrt(ch.map(x=>Math.pow(x-m,2)).reduce((a,b)=>a+b,0)/ch.length);},
                 trendStrength:(d,p)=>{if(d.length<p)return 0;let e=d.slice(-p).map((_,i,a)=>calc.ema(a.slice(0,i+1),p)).filter(v=>v);if(e.length<2)return 0;return Math.min(Math.abs((e[e.length-1]-e[0])/e.length*10000),1);}
             };
-
+            
             function runFullAnalysis() {
-                if (!apiStatus.price) {
-                    elements.predictionSignal.textContent = 'ОШИБКА';
-                    elements.predictionTiming.textContent = 'Нет данных для анализа.';
-                    elements.predictionProbability.textContent = '0%';
-                    return;
-                }
+                if (!priceData || priceData.length === 0) return;
                 let score = 0;
                 const rsi = calc.rsi(priceData,14), ema = calc.ema(priceData,20), macd = calc.macd(priceData,12,26);
                 elements.rsiValue.textContent=rsi?rsi.toFixed(2):'-'; elements.emaValue.textContent=ema?ema.toFixed(5):'-'; elements.macdValue.textContent=macd?macd.toFixed(5):'-';
                 if(rsi){if(rsi>75)score--;else if(rsi<25)score++;} if(ema){if(priceData[priceData.length-1].close>ema)score++;else score--;} if(macd){if(macd>0)score+=0.5;else score-=0.5;}
                 
                 let newsScore=0, analyzed=newsData.filter(i=>i.sentiment);
-                if(apiStatus.news && analyzed.length>0){analyzed.forEach(i=>{if(i.sentiment==='BUY')newsScore++;if(i.sentiment==='SELL')newsScore--;});let avg=newsScore/analyzed.length,sentiment="NEUTRAL";if(avg>0.3)sentiment="POSITIVE";else if(avg<-0.3)sentiment="NEGATIVE";elements.sentimentValue.textContent=sentiment;if(sentiment==='POSITIVE')score+=1.5;if(sentiment==='NEGATIVE')score-=1.5;}
+                if(analyzed.length>0){analyzed.forEach(i=>{if(i.sentiment==='BUY')newsScore++;if(i.sentiment==='SELL')newsScore--;});let avg=newsScore/analyzed.length,sentiment="NEUTRAL";if(avg>0.3)sentiment="POSITIVE";else if(avg<-0.3)sentiment="NEGATIVE";elements.sentimentValue.textContent=sentiment;if(sentiment==='POSITIVE')score+=1.5;if(sentiment==='NEGATIVE')score-=1.5;}
                 else { elements.sentimentValue.textContent = 'N/A'; }
 
-                scoreHistory.push(score); if (scoreHistory.length > SCORE_HISTORY_LENGTH) scoreHistory.shift();
+                const SCORE_SENSITIVITY = 1.8;
+                scoreHistory.push(score); if (scoreHistory.length > 3) scoreHistory.shift();
                 const avgScore = scoreHistory.reduce((a, b) => a + b, 0) / scoreHistory.length;
                 
                 let probability = 50 + (Math.abs(avgScore) / SCORE_SENSITIVITY * 25) + (calc.trendStrength(priceData, 50) * 15);
                 if (!apiStatus.news) probability -= 20;
-                probability = Math.round(Math.max(30, Math.min(95, probability)));
-                elements.predictionProbability.textContent = `${probability}%`;
+                elements.predictionProbability.textContent = `${Math.round(Math.max(30, Math.min(95, probability)))}%`;
 
                 const timeframeMinutes = {'1min':1,'5min':5,'15min':15,'30min':30,'1hour':60}[currentTimeframe];
                 const holdMinutes = timeframeMinutes * 5;
-                const timeSinceChange = Date.now() - signalTimestamp;
-                
-                let finalSignal=currentSignal, timing=elements.predictionTiming.textContent;
-                if(avgScore>=SCORE_SENSITIVITY&&currentSignal!=='BUY'){finalSignal='BUY';timing=`Вход сейчас. Удержание: ~${holdMinutes} мин.`;}else if(avgScore<=-SCORE_SENSITIVITY&&currentSignal!=='SELL'){finalSignal='SELL';timing=`Вход сейчас. Удержание: ~${holdMinutes} мин.`;}else if(Math.abs(avgScore)<0.8&&currentSignal!=='HOLD'&&timeSinceChange>(holdMinutes/3*60*1000)){finalSignal='HOLD';timing='Сигнал ослаб. Закрыть позицию.';}
-
+                let finalSignal=currentSignal;
+                if(avgScore>=SCORE_SENSITIVITY&&currentSignal!=='BUY'){finalSignal='BUY';}else if(avgScore<=-SCORE_SENSITIVITY&&currentSignal!=='SELL'){finalSignal='SELL';}else if(Math.abs(avgScore)<0.8){finalSignal='HOLD';}
                 if(finalSignal!==currentSignal){currentSignal=finalSignal;signalTimestamp=Date.now();if(currentSignal!=='HOLD'){signalExitTimestamp=Date.now()+holdMinutes*60*1000;startCountdown();}else{stopCountdown();}}
-                
-                elements.predictionSignal.textContent=finalSignal; elements.predictionSignal.className=`sentiment-${finalSignal.toLowerCase()}`; elements.predictionTiming.textContent=timing;
+                elements.predictionSignal.textContent=finalSignal; elements.predictionSignal.className=`sentiment-${finalSignal.toLowerCase()}`;
                 
                 const vol=calc.volatility(priceData,20),trend=calc.trendStrength(priceData,50);
                 if(finalSignal!=='HOLD'&&vol){let c=probability/100,rf=1/(vol*100||1);let s=Math.max(0.5,Math.min(5,1*c*trend*rf)).toFixed(1)+'%',l=Math.round(Math.max(10,Math.min(200,50*rf*c)))+'x';elements.positionSizeValue.textContent=s;elements.leverageValue.textContent=l;}else{elements.positionSizeValue.textContent='-';elements.leverageValue.textContent='-';}
             }
-            
-            function updateApiStatusFooter() {
-                if (!apiStatus.price && !apiStatus.news) {
-                    elements.apiStatusFooter.className = 'footer-status error';
-                    elements.apiStatusFooter.textContent = 'Вам лимит на сегодня превышен.';
-                } else if (!apiStatus.price || !apiStatus.news) {
-                    elements.apiStatusFooter.className = 'footer-status warning';
-                    elements.apiStatusFooter.textContent = 'Один или несколько источников данных недоступны. Прогноз может быть неточным.';
-                } else {
-                    elements.apiStatusFooter.className = '';
-                    elements.apiStatusFooter.textContent = '';
-                }
-            }
 
             function startCountdown(){stopCountdown();updateCountdown();countdownInterval=setInterval(updateCountdown,1000);}
             function stopCountdown(){clearInterval(countdownInterval);elements.countdownTimer.textContent='';}
-            function updateCountdown(){const r=signalExitTimestamp-Date.now();if(r<=0){elements.countdownTimer.textContent='Время вышло!';clearInterval(countdownInterval);return;}const m=Math.floor((r/60000)%60),s=Math.floor((r/1000)%60);elements.countdownTimer.textContent=`Выход: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;}
+            function updateCountdown(){const r=signalExitTimestamp-Date.now();if(r<=0){elements.countdownTimer.textContent='Время вышло!';clearInterval(countdownInterval);return;}const m=Math.floor((r/60000)%60),s=Math.floor((r/1000)%60);elements.countdownTimer.textContent=`Выход: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`}
+
+            init();
         }
 
         function startLoginAnimation() {
@@ -880,14 +613,12 @@
                 const high = Math.max(open, close) + Math.random() * 20;
                 const low = Math.min(open, close) - Math.random() * 20;
                 candles.push({ x: width, open, high, low, close });
-                if (candles.length > width / (candleWidth + 5)) {
-                    candles.shift();
-                }
+                if (candles.length > width / (candleWidth + 5)) candles.shift();
             }
 
             function draw() {
                 ctx.clearRect(0, 0, width, height);
-                candles.forEach((candle, i) => {
+                candles.forEach((candle) => {
                     candle.x -= 2;
                     ctx.strokeStyle = candle.close >= candle.open ? 'rgba(25, 135, 84, 0.7)' : 'rgba(220, 53, 69, 0.7)';
                     ctx.fillStyle = ctx.strokeStyle;
@@ -914,15 +645,12 @@
             };
         }
         function stopLoginAnimation() { 
-            if (window.stopLoginAnimation) {
-                window.stopLoginAnimation();
-            }
+            if (window.stopLoginAnimation) window.stopLoginAnimation();
         }
         
         checkSession();
     });
     </script>
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
